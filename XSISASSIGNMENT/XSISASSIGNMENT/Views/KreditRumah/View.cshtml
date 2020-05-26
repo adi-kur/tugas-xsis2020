@@ -1,0 +1,68 @@
+﻿@model IEnumerable<ViewModel.Xsis.VM_Angsuran>
+
+@{
+    ViewBag.Title = "View";
+    Layout = null;
+}
+
+<h2>Jadwal Angsuran</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Bulan)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TanggalAngsuran)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SaldoPokok)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AngsuranPokok)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AngsuranBunga)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AngsuranTotal)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Bunga)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Bulan)
+            </td>
+            <td>
+                @item.TanggalAngsuran.ToString("dd/MM/yyyy")
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SaldoPokok)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AngsuranPokok)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AngsuranBunga)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AngsuranTotal)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Bunga)
+            </td>
+            @*<td>
+                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                </td>*@
+        </tr>
+    }
+
+</table>

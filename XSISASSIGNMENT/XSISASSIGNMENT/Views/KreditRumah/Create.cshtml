@@ -1,0 +1,125 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+@using (Html.BeginForm("Create", "KreditRumah", FormMethod.Post, new { id = "Id_Form_Create" }))
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6 form-group">
+                <label for="NO_REKENING">NO REKENING</label>
+                <input type="text" class="form-control" name="NO_REKENING" id="NO_REKENING" value="@ViewBag.NoRek" readonly />
+            </div>
+
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6 form-group">
+                <label for="TANGGAL_REALISASI">TANGGAL REALISASI</label>
+                <input type="date" class="form-control" name="TANGGAL_REALISASI" id="TANGGAL_REALISASI" />
+            </div>
+
+            <div class="col-sm-6 form-group">
+                <label for="PLAFOND">PLAFOND</label>
+                <input type="text" class="form-control" name="PLAFOND" id="PLAFOND" />
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6 form-group">
+                <label for="JANGKA_WAKTU">JANGKA WAKTU</label>
+                <input type="text" class="form-control" name="JANGKA_WAKTU" id="JANGKA_WAKTU" />
+            </div>
+
+            <div class="col-sm-6 form-group">
+                <label for="PERSEN_BUNGA">PERSEN BUNGA</label>
+                <input type="text" class="form-control" name="PERSEN_BUNGA" id="PERSEN_BUNGA" />
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-dark" data-dismiss="modal" id="id-batal-add">Close</button>
+        <button type="submit" class="btn btn-success" id="btn-Add">Save</button>
+    </div>
+}
+<script src="~/Scripts/jquery.validate.js"></script>
+<script>
+
+    $(function () {
+        $("#Id_Form_Create").validate({
+            errorClass: 'errors',
+            rules: {
+                TANGGAL_REALISASI: {
+                    required: true,
+                },
+                PLAFOND: {
+                    required: true,
+                    min: 6,
+                    number: true
+                },
+                PERSEN_BUNGA: {
+                    required: true,
+                    min: 1,
+                    max:99,
+                    number: true
+                },
+                JANGKA_WAKTU: {
+                    required: true,
+                    min: 3,
+                    number: true
+                }
+            },
+            messages: {
+                TANGGAL_REALISASI: {
+                    required: "Please Input Realisation Date",
+                },
+                PLAFOND: {
+                    required: "Please Input Plafond",
+                    min: "Min Plafond 500000",
+                    number: "Plafond Must Be Number Format",
+                },
+                PERSEN_BUNGA: {
+                    required: "Please Input Persen Bunga",
+                    min: "Min Persen bunga 1 %",
+                    max: "Max Persen Bunga 99 %",
+                    number: "Persen Bunga Must Be Number Format"
+                },
+                JANGKA_WAKTU: {
+                    required: "Please Input Jangka Waktu",
+                    min: "Min Jangka Waktu 3 Month",
+                    number: "Jangkat Waktu Must Be Number Format"
+                }
+            },
+
+            submitHandler: function (form) {
+                var dataForm = $(form).serialize();
+                debugger;
+                $.ajax({
+                    url: '/KreditRumah/Create',
+                    data: dataForm,
+                    method: 'post',
+                    //dataType: 'json',
+                    success: function (response) {
+                        debugger;
+                        if (response.message == "Berhasil") {
+                            window.location.href = '../KreditRumah/Index' 
+
+                        }
+                        else {
+                            alert(response.message);
+                        }
+                    }
+                });
+            }
+        });
+        return false;
+    });
+
+</script>

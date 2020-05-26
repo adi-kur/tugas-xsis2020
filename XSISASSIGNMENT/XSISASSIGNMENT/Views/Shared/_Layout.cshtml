@@ -1,0 +1,66 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - BANK XSIS </title>
+    <link href="~/Content/Site.css" rel="stylesheet" />
+
+    <link href="~/Content/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.0.4/popper.js"></script>
+    <script src="https://code.jquery.com/jquery-2.2.4.js" integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI=" crossorigin="anonymous"></script>
+
+
+    <script src="~/Content/vendor/jquery/jquery.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Content/vendor/bootstrap/js/bootstrap.js"></script>
+    <link href="~/Content/css/sb-admin-2.css" rel="stylesheet" />
+    <style>
+        .errors {
+            border-color: red;
+            color: red;
+        }
+        body {
+            padding-top: 0px;
+        }
+    </style>
+
+</head>
+<body id="page-top" class="container-fluid">
+    <!-- Topbar -->
+    @Html.Partial("_Navbar")
+    <div id="wrapper">
+        @Html.Partial("_Modal")
+
+
+        <!-- End of Topbar -->
+        <div id="content-wrapper" class="d-flex flex-column">
+            <!-- Main Content -->
+            <div id="content">
+                <div class="row">
+                    <div class="col-sm-3">@Html.Partial("_Sidebar")</div>
+                    <div class="col-sm-9">
+                        <section class="content">
+                            @RenderBody()
+                        </section>
+                    </div>
+
+                </div>
+
+            </div>
+            <hr />
+            <footer>
+                <p><center>2020 - XSIS MITRA UTAMA</center></p>
+            </footer>
+        </div>
+    </div>
+
+    <script src="~/Content/js/sb-admin-2.min.js"></script>
+
+
+
+</body>
+
+</html>

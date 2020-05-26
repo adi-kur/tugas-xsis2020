@@ -1,0 +1,229 @@
+﻿@model List<ViewModel.Xsis.VMNasabah>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Data Nasabah BANK XSIS</h2>
+
+<input id="btn-Add" class="btn btn-info" style="background-color:#191970" type="button" value="Input Data NASABAH" idnasabah=>
+
+<div class="table-responsive">
+    <table class="table table-striped text-center table-bordered">
+        <thead>
+            <tr>
+                <td>
+                    NAMA
+                </td>
+                <td>
+                    NO REKENING
+                </td>
+                <td>
+                    EMAIL
+                </td>
+                <td>
+                    TELEPON
+                </td>
+                <td>
+                    PEKERJAAN
+                </td>
+                <td>
+                    ALAMAT
+                </td>
+                <td>
+                    ACTION
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var a in Model)
+            {
+                <tr>
+
+                    <td>
+                        @a.NAMA
+                    </td>
+                    <td>
+                        @a.NO_REKENING
+                    </td>
+                    <td>
+                        @a.EMAIL
+                    </td>
+                    <td>
+                        @a.TELEPON
+                    </td>
+                    <td>
+                        @a.PEKERJAAN
+                    </td>
+                    <td>
+                        @a.ALAMAT
+                    </td>
+                    <td>
+                        <button class="btn btn-warning btn cls-edit" onclick="Edit(@a.ID_NASABAH)">Edit</button>
+                        <button class="btn btn-danger cls-delete" onclick="Delete123(@a.ID_NASABAH)">Delete</button>
+                        @*<button class="btn btn-success" onclick="Detail(@a.ID_NASABAH)">Detail</button>*@
+                        @{
+                            if (a.IS_KREDIT == false)
+                            {
+                                <button class="btn btn-success" onclick="AjukanKredit('@a.NO_REKENING')">Ajukan Kredit</button>
+                            }
+                            else
+                            {
+                                <button class="btn btn-success" onclick="AjukanKredit(@a.NO_REKENING)" disabled>Ajukan Kredit</button>
+                            }
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<!-- Modal -->
+<div class="modal" id="id-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color:#D33E1E">
+                <h5 class="modal-title"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="id-body-modal">
+            </div>
+            @*<div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>*@
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="id-modals" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color:#191970">
+                <h5 class="modal-title"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="id-body-modals">
+            </div>
+            @*<div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>*@
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-delete" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header" id="head-delete" style="background-color:#191970">
+                <h5 class="modal-title" id="title-delete">Yakin Hapus ?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="id-body-delete">
+                ...
+            </div>
+            <div class="modal-footer">
+                <div style="float:right;">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">
+                        <span aria-hidden="true">Batal</span>
+                    </button>
+                    <button id="id-btn-submit" type="submit" class="btn btn-primary">Ya</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    function AjukanKredit(NoRek) {
+        console.log(NoRek)
+        $.ajax({
+            url: '@Url.Action("Create", "KreditRumah")',
+            method: 'get',
+            data: {
+                noRek: NoRek
+            },
+            success: function (hasil) {
+                $("#id-body-modals").html(hasil);
+                $("#id-modals").modal("show");
+            }
+        });
+    };
+
+        $("#btn-Add").click(function () {
+        $.ajax({
+            url: '@Url.Action("Create","Nasabah")',
+            method: 'get',
+            success: function (hasil) {
+                $("#id-body-modals").html(hasil);
+                $("#id-modals").modal("show");
+            }
+        });
+        });
+
+    function Edit(Nasabah) {
+            $.ajax({
+            url: '/Nasabah/Edit',
+            method: 'get',
+            data:
+            {
+                Nasabah: Nasabah
+            },
+            success: function (hasil) {
+                debugger;
+                $("#id-body-modals").html(hasil);
+                $("#id-modals").modal("show");
+            }
+        });
+    }
+
+    function Delete123(id) {
+        console.log(id)
+        $("#id-body-delete").empty();
+        //("#title-delete").append("Hapus");
+        $("#id-body-delete").append("Anda yakin ingin menghapus Data ?");
+        $("#modal-delete").modal("show");
+
+        $("#id-btn-submit").click(function () {
+            console.log("test")
+            $.ajax({
+                url: '@Url.Action("Delete", "Nasabah")',
+                method: 'post',
+                data: {
+                    Nasabah : id
+                },
+                success: function (hasil) {
+                    window.location.href = '@Url.Action("Index","Nasabah")';
+                }
+            });
+        })
+    }
+
+    function Hitung_Angsuran(noRek) {
+        $.ajax({
+
+            url: '/DataRekening/HitungAngsuran',
+            method: 'get',
+            data:
+            {
+                noRek: noRek
+            },
+            success: function (hasil) {
+                debugger;
+                $("#id-body-modals").html(hasil);
+                $("#id-modals").modal("show");
+            }
+        });
+    }
+    //FIX 2020
+</script>
+
+

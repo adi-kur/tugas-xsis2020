@@ -1,0 +1,139 @@
+﻿@model List<ViewModel.Xsis.VMRekening>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>DATA REKENING</h2>
+
+@*<input id="btn-Add" class="btn btn-info"  style="background-color:#191970" type="button" value="Update Data Rekening" idnasabah=>*@
+
+<div class="table-responsive">
+    <table class="table table-striped text-center table-bordered">
+        <thead>
+            <tr>
+                <td>
+                    ID NASABAH
+                </td>
+                <td>
+                    NO REKENING
+                </td>
+                <td>
+                    NAMA
+                </td>
+                <td>
+                    SALDO
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var a in Model)
+            {
+                <tr>
+
+                    <td>
+                        @a.ID_NASABAH
+                    </td>
+                    <td>
+                        @a.NO_REKENING
+                    </td>
+                    <td>
+                        @a.NAMA
+                    </td>
+                    <td>
+                        @a.SALDO
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<!-- Modal -->
+<div class="modal" id="id-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color:#191970">
+                <h5 class="modal-title"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="id-body-modal">
+            </div>
+            @*<div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>*@
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="id-modals" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color:#191970">
+                <h5 class="modal-title"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="id-body-modals">
+            </div>
+            @*<div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>*@
+        </div>
+    </div>
+</div>
+
+
+<script>
+        $("#btn-Add").click(function () {
+        $.ajax({
+            url: '@Url.Action("Create","DataRekening")',
+            method: 'get',
+            success: function (hasil) {
+                $("#id-body-modal").html(hasil);
+                $("#id-modal").modal("show");
+            }
+        });
+        });
+
+    function Edit(noRek) {
+            $.ajax({
+            url: '/DataRekening/Edit',
+            method: 'get',
+            data:
+            {
+                noRek: noRek
+            },
+            success: function (hasil) {
+                debugger;
+                $("#id-body-modal").html(hasil);
+                $("#id-modal").modal("show");
+            }
+        });
+    }
+
+    function Hitung_Angsuran(noRek) {
+        $.ajax({
+
+            url: '/DataRekening/HitungAngsuran',
+            method: 'get',
+            data:
+            {
+                noRek: noRek
+            },
+            success: function (hasil) {
+                debugger;
+                $("#id-body-modals").html(hasil);
+                $("#id-modals").modal("show");
+            }
+        });
+    }
+
+
+</script>
+
+

@@ -1,0 +1,230 @@
+﻿@{
+    ViewBag.Title = "Create";
+    Layout = null;
+}
+
+
+@using (Html.BeginForm("Create", "Nasabah", FormMethod.Post, new { id = "Id_Form_Create" }))
+{
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6 form-group">
+                <label for="NO_REKENING">NO REKENING</label>
+                <input type="text" class="form-control" name="NO_REKENING" id="NO_REKENING" disabled />
+            </div>
+
+            <div class="col-sm-3 form-group">
+                <label for="NIK">NIK</label>
+                <input type="text" class="form-control" name="NIK" id="NIK" />
+            </div>
+
+            <div class="col-sm-3 form-group">
+                <label for="TELEPON">TELEPON</label>
+                <input type="text" class="form-control" name="TELEPON" id="TELEPON" />
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <label for="NAMA">NAMA</label>
+                <input type="text" class="form-control" name="NAMA" id="NAMA" />
+            </div>
+
+            <div class="col-sm-3 form-group">
+                <label for="EMAIL">EMAIL</label>
+                <input type="text" class="form-control" name="EMAIL" id="EMAIL" />
+            </div>
+
+            <div class="col-lg-3 form-group">
+                <label for="SALDO">SALDO</label>
+                <input type="text" class="form-control" name="SALDO" id="SALDO" />
+            </div>
+
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6 form-group">
+                <label for="TANGGAL_LAHIR">TANGGAL LAHIR</label>
+                <input type="date" class="form-control" name="TANGGAL_LAHIR" id="TANGGAL_LAHIR" />
+            </div>
+
+            <div class="col-sm-3 form-group">
+                <label for="JENIS_KELAMIN">JENIS KELAMIN</label>
+                <select class="form-control" id="JENIS_KELAMIN" name="JENIS_KELAMIN">
+                    <option value="P">Perempuan</option>
+                    <option value="L">Laki-Laki</option>
+                </select>
+                @*<input type="text" class="form-control" name="JENIS_KELAMIN" id="JENIS_KELAMIN" />*@
+            </div>
+
+            <div class="col-sm-3 form-group">
+                <label for="AGAMA">AGAMA</label>
+                <select class="form-control" id="AGAMA" name="AGAMA">
+                    <option value="1">Islam</option>
+                    <option value="2">Katolik</option>
+                    <option value="3">Kristen</option>
+                    <option value="4">Budha</option>
+                    <option value="5">Hindu</option>
+                </select>
+                @*<input type="text" class="form-control" name="AGAMA" id="AGAMA" />*@
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6 form-group">
+                <label for="NAMA_IBU_KANDUNG">NAMA IBU KANDUNG</label>
+                <input type="text" class="form-control" name="NAMA_IBU_KANDUNG" id="NAMA_IBU_KANDUNG" />
+            </div>
+
+            <div class="col-sm-3 form-group">
+                <label for="STATUS">STATUS</label>
+                <select class="form-control" id="STATUS" name="STATUS">
+                    <option value="1">Single</option>
+                    <option value="2">Menikah</option>
+                </select>
+                
+            </div>
+
+            <div class="col-sm-3 form-group">
+                <label for="PEKERJAAN">PEKERJAAN</label>
+                <input type="text" class="form-control" name="PEKERJAAN" id="PEKERJAAN" />
+            </div>
+
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 form-group">
+                <label for="ALAMAT">ALAMAT</label>
+                <input type="text" class="form-control" name="ALAMAT" id="ALAMAT" />
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-dark" data-dismiss="modal" id="id-batal-add">Close</button>
+        <button type="submit" class="btn btn-success" id="btn-Add">Save</button>
+    </div>
+}
+<script src="~/Scripts/jquery.validate.js"></script>
+
+<script>
+    function toDate(dateStr) {
+        var parts = dateStr.split("-")
+        return new Date(parts[2], parts[1] - 1, parts[0])
+    };
+
+    $("#TANGGAL_LAHIR").change(function () {
+        debugger
+
+        var input = $("#TANGGAL_LAHIR").val();
+        var t = toDate(input);
+
+        var d = new Date();
+        var month = d.getMonth() + 1;
+        var day = d.getDate();
+        var years = d.getFullYear();
+
+        var datenow = d.getFullYear() + '-' +
+            (month < 10 ? '0' : '') + month + '-' +
+            (day < 10 ? '0' : '') + day;
+        var f = toDate(datenow);
+
+        if (t > f && input > datenow) {
+            alert("Faild Birthday");
+            $("#TANGGAL_LAHIR").val(null);
+        }
+    });
+
+    $(function () {
+        $("#Id_Form_Create").validate({
+            errorClass: 'errors',
+            rules: {
+                EMAIL: {
+                    required: true,
+                },
+                NAMA: {
+                    required: true,
+                },
+                TELEPON: {
+                    required: true,
+                    number: true,
+                    min:10,
+                    maxlength:13,
+                },
+                TANGGAL_LAHIR: {
+                    required: true,
+                },
+                NIK: {
+                    required: true,
+                    maxlength: 16,
+                    min:16,
+                    number: true
+                }
+            },
+            messages: {
+                EMAIL: {
+                    required: "Please input EMAIL",
+                },
+                NAMA: {
+                    required: "Please input NAME",
+                },
+                TELEPON: {
+                    required: "Please input telephone",
+                    number: "Must Be Number",
+                    min:"10 Digits",
+                    maxlength: "Max Length 13"
+
+                },
+                TANGGAL_LAHIR: {
+                    required: "Please input Tanggal Lahir",
+                },
+                NIK: {
+                    required: "Please Input NIK",
+                    maxlength:"Max Length 16",
+                    number: "Must Be Number",
+                    min: "Min 16 Digits"
+
+                }
+            },
+
+            submitHandler: function (form) {
+                var dataForm = $(form).serialize();
+                debugger;
+                $.ajax({
+                    url: '/Nasabah/Create',
+                    data: dataForm,
+                    method: 'post',
+                    //dataType: 'json',
+                    success: function (response) {
+                        debugger;
+                        if (response.message == "Berhasil") {
+                            window.location.reload();
+                        }
+                        else if (response.message == "Gagal") {
+                            alert(response.message);
+                            window.location.reload();
+                        }
+                        else {
+                            window.location.reload();
+                        }
+                    }
+                });
+            }
+        });
+        return false;
+    });
+
+</script>
